@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Relatório - QuadraFácil{% endblock %}
+{% block conteudo %}
+<h1>Relatório de reservas e faturamento</h1>
+<div class="cartao">
+  <form method="get">
+    <div class="col">
+      <label for="inicio">De</label>
+      <input type="date" id="inicio" name="inicio" value="{{ inicio }}">
+    </div>
+    <div class="col">
+      <label for="fim">Até</label>
+      <input type="date" id="fim" name="fim" value="{{ fim }}">
+    </div>
+    <div class="col"><button type="submit">Gerar relatório</button></div>
+    <div class="limpa"></div>
+  </form>
+</div>
+<table>
+  <tr><th>Quadra</th><th class="num">Confirmadas</th><th class="num">Canceladas</th><th class="num">Faturamento</th></tr>
+  {% for l in linhas %}
+  <tr>
+    <td>{{ l.quadra }}</td><td class="num">{{ l.confirmadas or 0 }}</td>
+    <td class="num">{{ l.canceladas or 0 }}</td><td class="num">{{ l.faturamento|brl }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<div class="total">Faturamento total: {{ total|brl }}</div>
+{% endblock %}

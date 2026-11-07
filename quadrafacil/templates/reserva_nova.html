@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Nova reserva - QuadraFácil{% endblock %}
+{% block conteudo %}
+<h1>Nova reserva</h1>
+<div class="cartao">
+  <form method="post">
+    <div class="col" style="width:48%">
+      <label for="id_cliente">Cliente *</label>
+      <select id="id_cliente" name="id_cliente">
+        <option value="">Selecione...</option>
+        {% for c in clientes %}
+        <option value="{{ c.id_cliente }}" {{ 'selected' if f.get('id_cliente') == c.id_cliente|string }}>{{ c.nome }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col" style="width:48%; margin-right:0">
+      <label for="id_quadra">Quadra *</label>
+      <select id="id_quadra" name="id_quadra">
+        <option value="">Selecione...</option>
+        {% for q in quadras %}
+        <option value="{{ q.id_quadra }}" {{ 'selected' if f.get('id_quadra') == q.id_quadra|string }}>{{ q.nome }} - {{ q.valor_hora|brl }}/h</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="limpa"></div>
+    <div class="col">
+      <label for="data">Data *</label>
+      <input type="date" id="data" name="data" min="{{ hoje }}" value="{{ f.get('data', hoje) }}">
+    </div>
+    <div class="col">
+      <label for="hora_inicio">Hora inicial *</label>
+      <input type="time" id="hora_inicio" name="hora_inicio" value="{{ f.get('hora_inicio', '') }}">
+    </div>
+    <div class="col" style="margin-right:0">
+      <label for="hora_fim">Hora final *</label>
+      <input type="time" id="hora_fim" name="hora_fim" value="{{ f.get('hora_fim', '') }}">
+    </div>
+    <div class="limpa"></div>
+    <button type="submit">Confirmar reserva</button>
+  </form>
+</div>
+{% endblock %}

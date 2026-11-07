@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block titulo %}Reservas do dia - QuadraFácil{% endblock %}
+{% block conteudo %}
+<h1>Reservas do dia {{ dia|data_br }}</h1>
+<div class="cartao">
+  <form method="get">
+    <div class="col">
+      <label for="data">Consultar outra data</label>
+      <input type="date" id="data" name="data" value="{{ dia }}">
+    </div>
+    <div class="col"><button type="submit">Filtrar</button></div>
+    <div class="limpa"></div>
+  </form>
+</div>
+{% if reservas %}
+<table>
+  <tr><th>Horário</th><th>Quadra</th><th>Cliente</th><th>Telefone</th><th class="num">Valor</th><th>Status</th><th></th></tr>
+  {% for r in reservas %}
+  <tr>
+    <td>{{ r.hora_inicio }} - {{ r.hora_fim }}</td>
+    <td>{{ r.quadra }}</td>
+    <td>{{ r.cliente }}</td>
+    <td>{{ r.telefone|fone }}</td>
+    <td class="num">{{ r.valor_total|brl }}</td>
+    <td><span class="etq {{ r.status }}">{{ r.status|capitalize }}</span></td>
+    <td>
+      {% if r.status == 'CONFIRMADA' %}
+      <form method="post" action="{{ url_for('cancelar_reserva', id_reserva=r.id_reserva) }}">
+        <button type="submit" class="perigo">Cancelar</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="vazio">Nenhuma reserva para esta data.</p>
+{% endif %}
+<a class="botao" href="{{ url_for('nova_reserva') }}">+ Nova reserva</a>
+{% endblock %}

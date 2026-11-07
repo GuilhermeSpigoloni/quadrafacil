@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Login - QuadraFácil{% endblock %}
+{% block conteudo %}
+<div class="login cartao">
+  <h1>Acesso ao sistema</h1>
+  <form method="post">
+    <label for="login">Usuário</label>
+    <input type="text" id="login" name="login" autofocus>
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" name="senha">
+    <button type="submit">Entrar</button>
+  </form>
+</div>
+{% endblock %}
